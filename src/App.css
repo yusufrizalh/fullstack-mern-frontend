@@ -272,3 +272,29 @@ button {
 .loginContainer input {
   border: 2px solid rgb(30, 97, 165);
 }
+
+.footer .username {
+  flex: 50%;
+}
+
+.footer .buttons {
+  flex: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.likeBttn {
+  color: rgba(214, 214, 214, 0.8);
+  padding-right: 6px;
+}
+
+.unlikeBttn {
+  color: white;
+  padding-right: 6px;
+}
+
+.buttons label {
+  margin-right: 20px;
+  margin-left: 10px;
+}
