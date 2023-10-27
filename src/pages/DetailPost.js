@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../helper/AuthContext";
 
 function DetailPost() {
   let { id } = useParams(); // mendeteksi id dari salah satu post yang dipilih
   const [postDetail, setPostDetail] = useState({}); // nilai awal object kosong
   const [comments, setComments] = useState([]); // diawal nilai comments masih kosong
   const [newComment, setNewComment] = useState(""); // diawal newComment masih kosong
+  let history = useHistory();
+  const { authState } = useContext(AuthContext);
 
   useEffect(() => {
     // mendapatkan 1 detail post
@@ -19,6 +22,7 @@ function DetailPost() {
     });
   }, []); // di render sekali ketika halaman detail post dibuka
 
+  // menambahkan comment kedalam post
   const addComment = () => {
     axios
       .post(
@@ -48,13 +52,36 @@ function DetailPost() {
       });
   };
 
+  // menghapus post milik username terkait
+  const deletePost = (id) => {
+    axios
+      .delete(`http://localhost:8001/posts/${id}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        history.push("/"); // ketika berhasil menghapus maka diarahkan ke home
+      });
+  };
+
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
           <div className="title">{postDetail.title}</div>
           <div className="body">{postDetail.postText}</div>
-          <div className="footer">{postDetail.username}</div>
+          <div className="footer">
+            {postDetail.username}
+            {authState.username === postDetail.username && (
+              <button
+                className="deleteBttn"
+                onClick={() => {
+                  deletePost(postDetail.id);
+                }}
+              >
+                Delete Post
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <div className="rightSide">

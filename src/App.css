@@ -284,6 +284,13 @@ button {
   align-items: center;
 }
 
+.footer .deleteBttn {
+  background-color: rgb(30, 97, 165);
+  color: white;
+  width: fit-content;
+  padding-left: 260px;
+}
+
 .likeBttn {
   color: rgba(214, 214, 214, 0.8);
   padding-right: 6px;

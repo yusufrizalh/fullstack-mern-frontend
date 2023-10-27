@@ -11,6 +11,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -82,6 +83,7 @@ function App() {
             <Route path="/post/:id" component={DetailPost} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/profile/:id" component={Profile} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>

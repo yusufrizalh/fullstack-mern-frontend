@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link as RouterLink } from "react-router-dom";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import Link from "@material-ui/core/Link";
 import { AuthContext } from "../helper/AuthContext";
 
 function Home() {
@@ -9,7 +10,7 @@ function Home() {
   const [allPosts, setAllPosts] = useState([]); // nilai awal array kosong
   const [likedPost, setLikedPost] = useState([]); // diawal belum ada liked
   const { authContext } = useContext(AuthContext);
-  
+
   // deklarasi useHistory
   let history = useHistory(); // redirect
 
@@ -89,7 +90,16 @@ function Home() {
               {key.postText}
             </div>
             <div className="footer">
-              <div className="username">{key.username}</div>
+              <div className="username">
+                <Link
+                  component={RouterLink}
+                  to={`/profile/${key.UserId}`}
+                  variant="text"
+                  color="inherit"
+                >
+                  {key.username}
+                </Link>
+              </div>
               <div className="buttons">
                 <ThumbUpAltIcon
                   className={

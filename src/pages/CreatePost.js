@@ -23,7 +23,6 @@ function CreatePost() {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title cannot be empty!"),
     postText: Yup.string().required("Post text cannot be empty!"),
-    username: Yup.string().min(8).max(16).required("Username cannot be empty!"),
   });
 
   const onSubmitForm = (data) => {
@@ -62,17 +61,9 @@ function CreatePost() {
             autoComplete="off"
           />
           <ErrorMessage name="postText" component="span" />
-          <label>Username</label>
-          <Field
-            id="inputCreatePost"
-            name="username"
-            placeholder="Please enter username here"
-            autoComplete="off"
-          />
-          <ErrorMessage name="username" component="span" />
 
           <button type="submit">Create Post</button>
-          <button type="reset">Crear Text</button>
+          <button type="reset">Clear Text</button>
         </Form>
       </Formik>
     </div>
