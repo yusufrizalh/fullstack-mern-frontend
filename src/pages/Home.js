@@ -1,12 +1,15 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import { AuthContext } from "../helper/AuthContext";
 
 function Home() {
   // inisialisasi nilai awal
   const [allPosts, setAllPosts] = useState([]); // nilai awal array kosong
   const [likedPost, setLikedPost] = useState([]); // diawal belum ada liked
+  const { authContext } = useContext(AuthContext);
+  
   // deklarasi useHistory
   let history = useHistory(); // redirect
 

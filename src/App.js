@@ -10,6 +10,7 @@ import { AuthContext } from "./helper/AuthContext";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -19,7 +20,7 @@ function App() {
   }); // diawal authState belum terautentikasi
 
   // inisialisasi useHistory
-  const history = useHistory(); // redirect
+  let history = useHistory(); // redirect
 
   useEffect(() => {
     axios
@@ -54,13 +55,16 @@ function App() {
         <Router>
           <div className="navbar">
             <div className="links">
-              <Link to="/">Home</Link>
               <Link to="/about">About</Link>
-              <Link to="/createpost">Create Post</Link>
-              {!authState.status && (
+              {!authState.status ? (
                 <>
                   <Link to="/register">Register</Link>
                   <Link to="/login">Login</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/">Home</Link>
+                  <Link to="/createpost">Create Post</Link>
                 </>
               )}
             </div>
@@ -78,6 +82,7 @@ function App() {
             <Route path="/post/:id" component={DetailPost} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="*" component={NotFound} />
           </Switch>
         </Router>
       </AuthContext.Provider>

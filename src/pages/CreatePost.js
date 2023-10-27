@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../helper/AuthContext";
 
 function CreatePost() {
+  let history = useHistory();
+
+  useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      history.push("/login");
+    }
+  }, []);
+
   const initValues = {
     title: "",
     postText: "",
@@ -17,9 +27,15 @@ function CreatePost() {
   });
 
   const onSubmitForm = (data) => {
-    axios.post("http://localhost:8001/posts", data).then((response) => {
-      console.log("Data is submitted!");
-    });
+    axios
+      .post("http://localhost:8001/posts", data, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        alert("New Post is created successfully!");
+        history.push("/");
+      });
   };
 
   return (
