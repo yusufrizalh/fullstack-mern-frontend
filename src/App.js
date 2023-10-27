@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import { AuthContext } from "./helper/AuthContext";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -16,6 +17,10 @@ function App() {
     id: 0,
     status: false,
   }); // diawal authState belum terautentikasi
+
+  // inisialisasi useHistory
+  const history = useHistory(); // redirect
+
   useEffect(() => {
     axios
       .get("http://localhost:8001/auth/auth", {
@@ -40,6 +45,7 @@ function App() {
   const LogoutProcess = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ username: "", id: 0, status: false });
+    // history.push("/login"); // setelah logout diarahkan ke login
   };
 
   return (

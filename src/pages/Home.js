@@ -11,18 +11,23 @@ function Home() {
   let history = useHistory(); // redirect
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8001/posts", {
-        headers: { accessToken: localStorage.getItem("accessToken") },
-      })
-      .then((response) => {
-        setAllPosts(response.data.allPosts);
-        setLikedPost(
-          response.data.likedPost.map((like) => {
-            return like.PostId; // post yang sudah ada liked nya
-          })
-        );
-      });
+    // cek ada token atau belum
+    if (!localStorage.getItem("accessToken")) {
+      history.push("/login"); // jika belum ada token maka diarahkan ke login
+    } else {
+      axios
+        .get("http://localhost:8001/posts", {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        })
+        .then((response) => {
+          setAllPosts(response.data.allPosts);
+          setLikedPost(
+            response.data.likedPost.map((like) => {
+              return like.PostId; // post yang sudah ada liked nya
+            })
+          );
+        });
+    }
   }, []);
   // useEffect dependencies
   // []: useEffect dijalankan satu kali diawal
